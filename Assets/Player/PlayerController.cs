@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 	private PlayerState state;
 	private PlayerState lastState;
 	private float lastStateTime;
+	private Vector2 lastDir = Vector2.down;
 
 	enum PlayerState {
 		Alive,
@@ -45,16 +46,24 @@ public class PlayerController : MonoBehaviour {
 				var h = Input.GetAxis ("Horizontal");
 				var v = Input.GetAxis ("Vertical");
 				transform.position += new Vector3 (h, 0, v) * Speed;
+				lastDir = new Vector2 (h, v);
 
 				if (Input.GetKey (KeyCode.Space)) {
 					state = PlayerState.SlammingUp;
 				}
 			} else if (state == PlayerState.SlammingUp && timeSinceLast > 0.25) {
 				state = PlayerState.SlammingDown;
-			} else if (state == PlayerState.SlammingDown && timeSinceLast > 0.25) {
-				state = PlayerState.Alive;
+			} else if (state == PlayerState.SlammingDown && timeSinceLast > 0.20) {
 			}
 
+		}
+	}
+
+	void OnCollisionEnter(Collision c) {
+		if (state == PlayerState.SlammingDown) {
+			var origin = c.collider.transform.position + new Vector3(0, -0.5f, 0);
+			var blocks = Physics.RaycastAll (origin, new Vector3 (lastDir.x, 0, lastDir.y));
+			state = PlayerState.Alive;
 		}
 	}
 }
