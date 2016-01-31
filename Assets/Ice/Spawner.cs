@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Floor : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     public GameObject IceCube;
     public float Distance = 1.05f;
@@ -10,7 +10,8 @@ public class Floor : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        var start = new Vector3(Distance, 0, Distance) * (Count / -2);
+        var start = transform.position + new Vector3(Distance, 0, Distance) * (Count / -2);
+
         for (uint i = 0; i < Count; i++)
             for (uint j = 0; j < Count; j++)
                 Instantiate(IceCube, start + new Vector3(i, 0, j) * Distance, Quaternion.identity);
