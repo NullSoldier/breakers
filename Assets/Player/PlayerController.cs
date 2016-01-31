@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour {
 	void Start ()
 	{
 		state = lastState = PlayerState.Alive;
+
+		foreach (var renderer in this.GetComponentsInChildren<MeshRenderer>()) {
+			renderer.material.color = new Color (Random.Range (0f, 1f), Random.Range (0f, 1f), Random.Range (0f, 1f), 1f);
+		}
 	}
 
 	void Update ()
