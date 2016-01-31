@@ -14,6 +14,7 @@ public class IceCube : MonoBehaviour
     public Material[] materials; //one for each state
     public float stateDelay = 0.25f;
     public float respawnDelay = 5f;
+    float crackDelay = 0;
 
     public CubeState state;
     CubeState lastState;
@@ -65,8 +66,8 @@ public class IceCube : MonoBehaviour
         {
             float stateChangeDelta = Time.time - lastStateChangeTime;
 
-            if (state == CubeState.Cracked && stateChangeDelta > stateDelay)
-                state = CubeState.Falling;
+            if (state == CubeState.Cracked && stateChangeDelta > stateDelay + crackDelay)
+                state = CubeState.Fractured;
             else if (state == CubeState.Fractured && stateChangeDelta > stateDelay)
                 state = CubeState.Falling;
             else if (state == CubeState.Falling && stateChangeDelta > respawnDelay)
@@ -74,9 +75,10 @@ public class IceCube : MonoBehaviour
         }
     }
 
-    void OnMouseDown()
+    public void Crack(float Delay)
     {
-        if (state == CubeState.Pristine)
-            state = CubeState.Cracked;
+        crackDelay = Delay;
+        if (state != CubeState.Falling)
+            state++;
     }
 }
