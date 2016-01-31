@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 30864b7738233db4081a886130ce8925
-timeCreated: 1454281301
+guid: 995e667dc17ce824fbcf76099f1680db
+timeCreated: 1454282772
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -10,6 +10,8 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Cylinder
+    7400000: Default Take
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -51,7 +53,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 1
+    normalImportMode: 0
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0
@@ -68,7 +70,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

@@ -32,9 +32,9 @@ public class PlayerController : MonoBehaviour
     {
         body = GetComponent<Rigidbody>();
         RaycastHit hit;
-        Physics.Raycast(transform.position, Vector3.down, out hit);
-        lastCube = hit.transform.GetComponent<IceCube>();
-
+        var rc = Physics.Raycast(transform.position, Vector3.down, out hit);
+        if (rc)
+            lastCube = hit.transform.GetComponent<IceCube>();
 
         if (playerIndex == 0)
         {
@@ -59,17 +59,18 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
-        var rc = Physics.Raycast(transform.position, Vector3.down, out hit);
+        var rc = Physics.Raycast(transform.position - new Vector3(lastDir.x, 0, lastDir.y), Vector3.down, out hit);
         if (rc)
         {
             var cube = hit.transform.GetComponent<IceCube>();
-            if (cube != lastCube)
+            
+            if (cube != lastCube && lastCube != null)
             {
                 cube.GetComponent<Renderer>().material.color = renderer.material.color;
                 lastCube.GetComponent<Renderer>().material.color = Color.white;
-
-                lastCube = cube;
             }
+
+            lastCube = cube;
         }
 
         if (state != lastState)
@@ -126,8 +127,11 @@ public class PlayerController : MonoBehaviour
         {
             state = PlayerState.Alive;
 
-            lastCube.GetComponentInChildren<ParticleSystem>().Play();
-            lastCube.Crack(0);
+            if (lastCube != null)
+            {
+                lastCube.GetComponentInChildren<ParticleSystem>().Play();
+                lastCube.Crack(0);
+            }
 
             var blocks = Physics.RaycastAll(lastCube.transform.position, -new Vector3(lastDir.x, 0, lastDir.y));
             

@@ -23,6 +23,7 @@ public class IceCube : MonoBehaviour
     Rigidbody rb;
     Renderer ren;
     ParticleSystem ptz;
+    AudioSource audio;
 
     int stateIndex { get { return (int)state; } }
 
@@ -31,6 +32,7 @@ public class IceCube : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         ren = GetComponent<Renderer>();
         ptz = GetComponentInChildren<ParticleSystem>();
+        audio = GetComponent<AudioSource>();
 
         lastState = state = CubeState.Pristine;
         lastStateChangeTime = 0f;
@@ -67,7 +69,10 @@ public class IceCube : MonoBehaviour
             float stateChangeDelta = Time.time - lastStateChangeTime;
 
             if (state == CubeState.Cracked && stateChangeDelta > stateDelay + crackDelay)
+            {
                 state = CubeState.Fractured;
+                audio.Play();
+            }
             else if (state == CubeState.Fractured && stateChangeDelta > stateDelay)
                 state = CubeState.Falling;
             else if (state == CubeState.Falling && stateChangeDelta > respawnDelay)
@@ -77,6 +82,7 @@ public class IceCube : MonoBehaviour
 
     public void Crack(float Delay)
     {
+
         crackDelay = Delay;
         if (state != CubeState.Falling)
             state++;
