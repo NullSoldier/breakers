@@ -1,0 +1,15 @@
+/*.userprefs
+/obj/
+
+/*.csproj
+/*.sln
+
+/Assets/UnityVS/
+/Assets/UnityVS.meta
+/.vs/
+
+/Library/
+/Temp/
+
+.DS_STORE
+desktop.ini
