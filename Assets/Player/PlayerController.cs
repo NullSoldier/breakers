@@ -4,10 +4,16 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
 	public float Speed = -0.5f;
+	public int playerIndex = 0;
+
 	private PlayerState state;
 	private PlayerState lastState;
 	private float lastStateTime;
 	private Vector2 lastDir = Vector2.down;
+
+	private KeyCode smashKey;
+	private string hAxis;
+	private string vAxis;
 
 	enum PlayerState {
 		Alive,
@@ -23,6 +29,16 @@ public class PlayerController : MonoBehaviour {
 
 		foreach (var renderer in this.GetComponentsInChildren<MeshRenderer>()) {
 			renderer.material.color = new Color (Random.Range (0f, 1f), Random.Range (0f, 1f), Random.Range (0f, 1f), 1f);
+		}
+
+		if (playerIndex == 0) {
+			smashKey = KeyCode.RightShift;
+			hAxis = "Horizontal1";
+			vAxis = "Vertical1";
+		} else {
+			smashKey = KeyCode.LeftShift;
+			hAxis = "Horizontal2";
+			vAxis = "Vertical2";
 		}
 	}
 
@@ -43,12 +59,12 @@ public class PlayerController : MonoBehaviour {
 			float timeSinceLast = Time.time - lastStateTime;
 
 			if (state == PlayerState.Alive) {
-				var h = Input.GetAxis ("Horizontal");
-				var v = Input.GetAxis ("Vertical");
+				var h = Input.GetAxis (hAxis);
+				var v = Input.GetAxis (vAxis);
 				transform.position += new Vector3 (h, 0, v) * Speed;
 				lastDir = new Vector2 (h, v);
 
-				if (Input.GetKey (KeyCode.Space)) {
+				if (Input.GetKey (smashKey)) {
 					state = PlayerState.SlammingUp;
 				}
 			} else if (state == PlayerState.SlammingUp && timeSinceLast > 0.25) {
