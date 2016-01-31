@@ -137,7 +137,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 35eb0f4abd0f36740b24276ec8ed623a, type: 2}
   - {fileID: 2100000, guid: 51f687c7ebf93384bb1e53c173cddf00, type: 2}
   - {fileID: 2100000, guid: 0776c7383a63f9245a21d6252a1dfeec, type: 2}
-  stateDelay: 0.25
+  stateDelay: 0.15
   respawnDelay: 5
   state: 0
 --- !u!198 &19880336
@@ -1749,14 +1749,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: stateDelay
-      value: 0.25
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: respawnDelay
       value: 5
-
-      propertyPath: lengthInSec
-      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ShapeModule.angle

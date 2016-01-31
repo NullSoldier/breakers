@@ -20,6 +20,7 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKey(KeyCode.R))
+            UnityEngine.SceneManagement.SceneManager.LoadScene("fuck", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 }
