@@ -5,9 +5,9 @@ public class IceCube : MonoBehaviour
 {
     public Material[] materials; //one for each state
 
-    uint state;
+    public uint state;
     uint lastState;
-    public float lastFallTime;
+    float lastFallTime;
 
     Rigidbody rb;
     Renderer ren;
@@ -19,6 +19,8 @@ public class IceCube : MonoBehaviour
         ren = GetComponent<Renderer>();
         lastState = state = 0;
         lastFallTime = 0;
+
+        ren.material = materials[state];
     }
 
     // Update is called once per frame
@@ -35,13 +37,14 @@ public class IceCube : MonoBehaviour
             {
                 ren.material = materials[state];
                 rb.useGravity = false;
+                rb.velocity = Vector3.zero;
                 transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             }
+
+            lastState = state;
         }
         else if (state == materials.Length && Time.time - lastFallTime > 3)
             state = 0;
-
-        lastState = state;
     }
 
     void OnMouseDown()
