@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerIndex == 0)
         {
-            smashKey = KeyCode.RightShift;
+			smashKey = KeyCode.RightAlt;
             hAxis = "Horizontal1";
             vAxis = "Vertical1";
         }
