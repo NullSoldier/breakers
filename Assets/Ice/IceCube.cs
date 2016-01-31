@@ -1,55 +1,76 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum CubeState {
+	Pristine = 0,
+	Cracked = 1,
+	Fractured = 2,
+	Falling = 3
+}
+
 public class IceCube : MonoBehaviour
 {
     public Material[] materials; //one for each state
+	public float stateDelay = 0.25f;
+	public float respawnDelay = 5f;
 
-    public uint state;
-    uint lastState;
-    float lastFallTime;
+    public CubeState state;
+	CubeState lastState;
+	float lastStateChangeTime;
 
     Rigidbody rb;
     Renderer ren;
 
-    // Use this for initialization
+	int stateIndex { get { return (int)state; } }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         ren = GetComponent<Renderer>();
-        lastState = state = 0;
-        lastFallTime = 0;
+		lastState = state = CubeState.Pristine;
+		lastStateChangeTime = 0f;
 
-        ren.material = materials[state];
+		ren.material = materials[stateIndex];
     }
-
-    // Update is called once per frame
+		
     void Update()
     {
-        if (state != lastState)
-        {
-            if (state == materials.Length)
-            {
-                rb.useGravity = true;
-                lastFallTime = Time.time;
-            }
-            else
-            {
-                ren.material = materials[state];
-                rb.useGravity = false;
-                rb.velocity = Vector3.zero;
-                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-            }
+		if (state != lastState) {
+			if (state == CubeState.Pristine){
+				ren.material = materials [stateIndex];
+				rb.useGravity = false;
+				rb.velocity = Vector3.zero;
+				transform.position = new Vector3 (transform.position.x, 0, transform.position.z);
+				ren.material = materials [stateIndex];
+			} else if (state == CubeState.Cracked) {
+				ren.material = materials[stateIndex];
+			} else if (state == CubeState.Fractured) {
+				ren.material = materials[stateIndex];
+			} else if (state == CubeState.Falling) {
+				rb.useGravity = true;
+			}
 
-            lastState = state;
-        }
-        else if (state == materials.Length && Time.time - lastFallTime > 3)
-            state = 0;
+			lastState = state;
+			lastStateChangeTime = Time.time;
+		} else {
+			float stateChangeDelta = Time.time - lastStateChangeTime;
+			
+			if (state == CubeState.Cracked && stateChangeDelta > stateDelay) {
+				state = CubeState.Falling;
+			}
+			else if (state == CubeState.Fractured && stateChangeDelta > stateDelay) {
+				state = CubeState.Falling;
+			}
+			else if (state == CubeState.Falling && stateChangeDelta > respawnDelay) {
+				state = CubeState.Pristine;
+			}
+		}
     }
 
     void OnMouseDown()
     {
-        if (state != materials.Length)
-            state++;
+		if (state == CubeState.Pristine) {
+			state = CubeState.Cracked;
+		}
     }
 }

@@ -3,13 +3,17 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	public float Speed = -0.5f;
+
+	void Start ()
+	{
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	void Update ()
+	{
+		var h = Input.GetAxis("Horizontal");
+		var v = Input.GetAxis("Vertical");
+		transform.position += new Vector3(h, 0, v) * Speed;
 	
 	}
 }
