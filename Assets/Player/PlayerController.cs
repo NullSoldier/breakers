@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            smashKey = KeyCode.LeftShift;
+			smashKey = KeyCode.Space;
             hAxis = "Horizontal2";
             vAxis = "Vertical2";
         }
