@@ -102,8 +102,11 @@ public class PlayerController : MonoBehaviour
                 var h = Input.GetAxis(hAxis);
                 var v = Input.GetAxis(vAxis);
 
-                h = touch.x;
-                v = touch.y;
+                if (playerIndex == 1)
+                {
+                    h = touch.x;
+                    v = touch.y;
+                }
 
                 transform.position += new Vector3(h, 0, v) * Speed;
                 if (h != 0 || v != 0)
