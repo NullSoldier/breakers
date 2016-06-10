@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &115466
 GameObject:
   m_ObjectHideFlags: 1
@@ -406,7 +406,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 0.09
-  playerIndex: 1
+  PlayerIndex: 0
+  MoveDir: {x: 0, y: -1}
+  LookDir: {x: 0, y: 0, z: 1}
+  isViveController: 0
 --- !u!114 &11499408
 MonoBehaviour:
   m_ObjectHideFlags: 1
