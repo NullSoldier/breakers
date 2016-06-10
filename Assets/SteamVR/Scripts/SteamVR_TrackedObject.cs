@@ -59,9 +59,6 @@ public class SteamVR_TrackedObject : MonoBehaviour
 
 		var pose = new SteamVR_Utils.RigidTransform(poses[i].mDeviceToAbsoluteTracking);
 
-        if(index == EIndex.Hmd)
-            Debug.Log("Transform: " + pose.pos);
-
         if (origin != null)
 		{
 			pose = new SteamVR_Utils.RigidTransform(origin) * pose;
