@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 {
     public float Speed = -0.5f;
     public int PlayerIndex = 0;
+	public bool isViveController = false;
 
     private PlayerState state;
     private PlayerState lastState;
