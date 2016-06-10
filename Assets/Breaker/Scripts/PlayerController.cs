@@ -37,15 +37,18 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-		// Check death
+        // Check death
         if (transform.position.y < -5)
+        {
             state = PlayerState.Dead;
+            gameObject.SetActive(false);
+        }
 
-		// read look direction
-		if (this.isViveController) {
-			this.lookDir = GetComponent<SteamVR_Camera> ().head.forward;
+        // read look direction
+        if (this.isViveController) {
+			this.LookDir = GetComponent<SteamVR_Camera> ().head.forward;
 		} else {
-			this.lookDir = Vector3 (moveDir.x, 0, moveDir.z);
+			this.LookDir = new Vector3 (MoveDir.x, 0.0f, MoveDir.y);
 		}
     }
 }

@@ -1,94 +1,111 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
+using System.Collections.Generic;
 
-enum PlayerState
+enum PlayerAttackState
 {
-    Alive,
-    Dead
+    None,
+    SlammingUp,
+    SlammingDown,
 }
 
 public class AttackState : MonoBehaviour
 {
-    private KeyCode smashKey;
+    public float BreakStaggerTime = 0.1f;
+
+    private PlayerController playerCtrl;
+    private PlayerMovement moveCtrl;
+    private Rigidbody rigidBody;
+    private IceCube lastCube;
+    private PlayerAttackState state;
+    private PlayerAttackState lastState;
+    private KeyCode attackKey = KeyCode.Space;
+    private float lastStateTime; // the time the last state change happened
 
     public void Awake()
     {
+        playerCtrl = GetComponent<PlayerController>();
+        moveCtrl = GetComponent<PlayerMovement>();
+        rigidBody = GetComponent<Rigidbody>();
+        lastCube = getCubeUnder();
+        attackKey = KeyCode.Space;
     }
 
     public void Update()
     {
-        body = GetComponent<Rigidbody>();
-        RaycastHit hit;
-        var rc = Physics.Raycast(transform.position, Vector3.down, out hit);
-        if (rc)
-            lastCube = hit.transform.GetComponent<IceCube>();
+        float timeSinceLast = Time.time - lastStateTime;
 
-
-        if (playerIndex == 0)
+        if (state != lastState)
         {
-            smashKey = KeyCode.RightAlt;
+            if (state == PlayerAttackState.SlammingUp)
+            {
+                rigidBody.velocity = Vector3.up * 5;
+            }
+            else if (state == PlayerAttackState.SlammingDown)
+            {
+                rigidBody.velocity = Vector3.down * 10;
+            }
+
+            lastState = state;
+            lastStateTime = Time.time;
         }
         else
         {
-            smashKey = KeyCode.Space;
+            if (state == PlayerAttackState.None)
+            {
+                if(Input.GetKey(attackKey))
+                    state = PlayerAttackState.SlammingUp;
+            }
+            else if (state == PlayerAttackState.SlammingUp)
+            {
+                if (timeSinceLast > 0.25)
+                    state = PlayerAttackState.SlammingDown;
+            }
         }
     }
 
-    Vector3 getDirVector()
+    private Vector3 getAttackDir()
     {
-        return transform.position - new Vector3(lastDir.x, 0, lastDir.y);
+        return new Vector3(-playerCtrl.LookDir.x, 0.0f, -playerCtrl.LookDir.y);
+    }
+
+    private IceCube getCubeUnder()
+    {
+        RaycastHit hit;
+        var rc = Physics.Raycast(transform.position, Vector3.down, out hit);
+        if (rc)
+            return hit.transform.GetComponent<IceCube>();
+        return null;
+    }
+
+    private IEnumerable<IceCube> getCubesAttacked()
+    {
+        return Physics
+            .RaycastAll(lastCube.transform.position, getAttackDir())
+            .Select((h) => h.transform.GetComponent<IceCube>());
     }
 
     void OnCollisionEnter(Collision c)
     {
-        if (state == PlayerState.SlammingDown)
+        if (state != PlayerAttackState.SlammingDown)
+            return;
+
+        if (lastCube == null)
         {
-            state = PlayerState.Alive;
-
-            if (lastCube != null)
-            {
-                lastCube.GetComponentInChildren<ParticleSystem>().Play();
-                lastCube.Crack(0);
-            }
-
-            var blocks = Physics.RaycastAll(lastCube.transform.position, -new Vector3(lastDir.x, 0, lastDir.y));
-
-            for (int i = 0; i < blocks.Length; i++)
-            {
-                blocks[i].transform.GetComponent<IceCube>().Crack(0.1f * i);
-            }
+            Debug.LogError("Collided with no lastCube");
+            return;
         }
+
+        float staggerTime = 0.0f;
+
+        foreach (IceCube cube in getCubesAttacked()) {
+            cube.Crack(staggerTime);
+            staggerTime += BreakStaggerTime;
+        }
+
+        lastCube.GetComponentInChildren<ParticleSystem>().Play();
+        lastCube.Crack(0);
+        state = PlayerAttackState.None;
     }
-
-    RaycastHit hit;
-    var rc = Physics.Raycast(transform.position - new Vector3(lastDir.x, 0, lastDir.y), Vector3.down, out hit);
-        if (rc)
-        {
-            var cube = hit.transform.GetComponent<IceCube>();
-            
-            if (cube != lastCube && lastCube != null)
-            {
-                
-                cube.GetComponent<Renderer>().material.color = renderer.material.color;
-                lastCube.GetComponent<Renderer>().material.color = Color.white;
-            }
-
-lastCube = cube;
-        }
-
-    if (state == PlayerState.SlammingUp)
-            {
-                body.velocity = Vector3.up* 5;
-            }
-            else if (state == PlayerState.SlammingDown)
-            {
-                var body = GetComponent<Rigidbody>();
-body.velocity = Vector3.down* 10;
-            }
-            else if (state == PlayerState.Dead)
-                gameObject.SetActive(false);
-
-    
-            lastState = state;
-            lastStateTime = Time.time;
 }
