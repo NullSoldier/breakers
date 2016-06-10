@@ -181,6 +181,7 @@ GameObject:
   - 114: {fileID: 11415562}
   - 54: {fileID: 5412594}
   - 136: {fileID: 13624212}
+  - 114: {fileID: 11444648}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -999,6 +1000,9 @@ MonoBehaviour:
   index: 8
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11408168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1013,6 +1017,9 @@ MonoBehaviour:
   index: 10
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11410474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1027,6 +1034,9 @@ MonoBehaviour:
   index: 13
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11415562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1071,6 +1081,9 @@ MonoBehaviour:
   index: 11
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11419580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1102,6 +1115,9 @@ MonoBehaviour:
   index: 9
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11423704
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1133,6 +1149,9 @@ MonoBehaviour:
   index: 7
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11424170
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1147,6 +1166,9 @@ MonoBehaviour:
   index: 5
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11424736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1161,6 +1183,9 @@ MonoBehaviour:
   index: 6
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11426604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1192,6 +1217,9 @@ MonoBehaviour:
   index: 0
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11428552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1223,6 +1251,9 @@ MonoBehaviour:
   index: 12
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11432462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1237,6 +1268,9 @@ MonoBehaviour:
   index: -1
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11433768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1285,6 +1319,9 @@ MonoBehaviour:
   index: 1
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11435670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1336,6 +1373,19 @@ MonoBehaviour:
   verbose: 0
   createComponents: 1
   updateDynamically: 1
+--- !u!114 &11444648
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3393714d106f54fe59879e013270c397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: -0.5
+  playerIndex: 0
 --- !u!114 &11446004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1376,6 +1426,9 @@ MonoBehaviour:
   index: 2
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11452672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1450,6 +1503,9 @@ MonoBehaviour:
   index: 15
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11471056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1496,6 +1552,9 @@ MonoBehaviour:
   index: 3
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11483320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1510,6 +1569,9 @@ MonoBehaviour:
   index: -1
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11485056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1558,6 +1620,9 @@ MonoBehaviour:
   index: 4
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11493770
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1589,6 +1654,9 @@ MonoBehaviour:
   index: 14
   origin: {fileID: 0}
   isValid: 0
+  trackX: 1
+  trackY: 1
+  trackZ: 1
 --- !u!114 &11495866
 MonoBehaviour:
   m_ObjectHideFlags: 1
