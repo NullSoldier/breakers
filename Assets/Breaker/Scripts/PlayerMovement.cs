@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour
     private PlayerController playerCtrl;
     private string hAxis;
     private string vAxis;
-    private Vector2 lastDir = Vector2.down;
 	private float Speed = playerCtrl.Speed;
 
     public void Awake()
@@ -27,19 +26,21 @@ public class PlayerMovement : MonoBehaviour
 
     public void Update()
     {
-		var h;
-		var v;
+		Vector2 movementVec;
 
+		// read inputs
 		if (playerCtrl.isViveController) {
 			var touch = getTouchPadPosition ();
-			h = touch.x;
-			v = touch.y;
+			Vector2 flatForward = Vector2 (playerCtrl.LookDir.x, playerCtrl.LookDir.z);
+
+			playerCtrl.MoveDir = flatForward * touch;
+
 		} else {
-			h = Input.GetAxis(hAxis);
-			v = Input.GetAxis(vAxis);
+			playerCtrl.MoveDir = Vector2(Input.GetAxis(hAxis), Input.GetAxis(vAxis));
 		}
 
-        transform.position += new Vector3(h, 0, v) * Speed;
+		// apply the movement tranform
+        transform.position += new Vector3(playerCtrl.MoveDir.x, 0, playerCtrl.MoveDir.z) * Speed;
         if (h != 0 || v != 0)
             lastDir = new Vector2(h, v);
     }
