@@ -44,11 +44,13 @@ public class PlayerController : MonoBehaviour
             gameObject.SetActive(false);
         }
 
-        // read look direction
-        if (this.isViveController) {
-			this.LookDir = GetComponent<SteamVR_Camera> ().head.forward;
-		} else {
-			this.LookDir = new Vector3 (MoveDir.x, 0.0f, MoveDir.y);
-		}
+        if(this.MoveDir != Vector2.zero) {
+            // read look direction
+            if (this.isViveController) {
+			    this.LookDir = GetComponent<SteamVR_Camera> ().head.forward;
+		    } else {
+			    this.LookDir = new Vector3 (MoveDir.x, 0.0f, MoveDir.y);
+		    }
+        }
     }
 }

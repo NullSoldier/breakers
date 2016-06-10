@@ -29,6 +29,8 @@ GameObject:
   - 136: {fileID: 13620380}
   - 54: {fileID: 5411496}
   - 114: {fileID: 11489896}
+  - 114: {fileID: 11462972}
+  - 114: {fileID: 11414732}
   m_Layer: 0
   m_Name: Player PC
   m_TagString: Untagged
@@ -118,6 +120,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &11414732
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d53ce8424ef4f64d80bf13eacdd93ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BreakStaggerTime: 0.1
+--- !u!114 &11462972
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5798967c00e5749b6527d1f0e85059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11489896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,7 +155,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: -0.09
-  playerIndex: 0
+  PlayerIndex: 0
+  MoveDir: {x: 0, y: -1}
+  LookDir: {x: 0, y: 0, z: 1}
+  isViveController: 0
 --- !u!136 &13620380
 CapsuleCollider:
   m_ObjectHideFlags: 1

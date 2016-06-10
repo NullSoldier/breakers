@@ -15,6 +15,7 @@ public class IceCube : MonoBehaviour
     public float stateDelay = 0.25f;
     public float respawnDelay = 5f;
     float crackDelay = 0;
+    float originalY = 0.0f;
 
     public CubeState state;
     CubeState lastState;
@@ -38,6 +39,7 @@ public class IceCube : MonoBehaviour
         lastStateChangeTime = 0f;
 
         ren.material = materials[stateIndex];
+        originalY = transform.position.y;
     }
 
     void Update()
@@ -49,7 +51,7 @@ public class IceCube : MonoBehaviour
                 ren.material = materials[stateIndex];
                 rb.useGravity = false;
                 rb.velocity = Vector3.zero;
-                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                transform.position = new Vector3(transform.position.x, originalY, transform.position.z);
                 ren.material = materials[stateIndex];
                 ptz.Stop();
             }

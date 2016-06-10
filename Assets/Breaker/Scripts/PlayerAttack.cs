@@ -10,12 +10,11 @@ enum PlayerAttackState
     SlammingDown,
 }
 
-public class AttackState : MonoBehaviour
+public class PlayerAttack : MonoBehaviour
 {
     public float BreakStaggerTime = 0.1f;
 
     private PlayerController playerCtrl;
-    private PlayerMovement moveCtrl;
     private Rigidbody rigidBody;
     private IceCube lastCube;
     private PlayerAttackState state;
@@ -26,7 +25,6 @@ public class AttackState : MonoBehaviour
     public void Awake()
     {
         playerCtrl = GetComponent<PlayerController>();
-        moveCtrl = GetComponent<PlayerMovement>();
         rigidBody = GetComponent<Rigidbody>();
         lastCube = getCubeUnder();
         attackKey = KeyCode.Space;
@@ -35,6 +33,13 @@ public class AttackState : MonoBehaviour
     public void Update()
     {
         float timeSinceLast = Time.time - lastStateTime;
+
+        IceCube cube = getCubeUnder();
+        if(cube)
+        {
+            cube.GetComponent<Renderer>().material.color = Color.red;
+            lastCube = cube;
+        }
 
         if (state != lastState)
         {
@@ -79,11 +84,14 @@ public class AttackState : MonoBehaviour
         return null;
     }
 
-    private IEnumerable<IceCube> getCubesAttacked()
+    private List<IceCube> getCubesAttacked()
     {
+        var foo = Physics.RaycastAll(lastCube.transform.position, getAttackDir());
+
         return Physics
             .RaycastAll(lastCube.transform.position, getAttackDir())
-            .Select((h) => h.transform.GetComponent<IceCube>());
+            .Select((h) => h.transform.GetComponent<IceCube>())
+            .ToList();
     }
 
     void OnCollisionEnter(Collision c)
@@ -98,8 +106,9 @@ public class AttackState : MonoBehaviour
         }
 
         float staggerTime = 0.0f;
+        var cubes = getCubesAttacked();
 
-        foreach (IceCube cube in getCubesAttacked()) {
+        foreach (IceCube cube in cubes) {
             cube.Crack(staggerTime);
             staggerTime += BreakStaggerTime;
         }

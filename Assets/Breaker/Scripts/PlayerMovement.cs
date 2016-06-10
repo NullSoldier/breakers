@@ -25,8 +25,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Update()
     {
-		Vector2 movementVec;
-
 		// read inputs
 		if (playerCtrl.isViveController)
         {
