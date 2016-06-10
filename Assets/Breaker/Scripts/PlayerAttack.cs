@@ -59,8 +59,20 @@ public class PlayerAttack : MonoBehaviour
         {
             if (state == PlayerAttackState.None)
             {
-                if(Input.GetKey(attackKey))
-                    state = PlayerAttackState.SlammingUp;
+                if (playerCtrl.isViveController)
+                {
+                    if (isTriggerDown(SteamVR_TrackedObject.EIndex.Device4))
+                    {
+                        var device = SteamVR_Controller.Input((int)SteamVR_TrackedObject.EIndex.Device4);
+                        device.TriggerHapticPulse();
+                        state = PlayerAttackState.SlammingUp;
+                    }
+                }
+                else
+                {
+                    if (Input.GetKey(attackKey))
+                        state = PlayerAttackState.SlammingUp;
+                }
             }
             else if (state == PlayerAttackState.SlammingUp)
             {
@@ -68,6 +80,12 @@ public class PlayerAttack : MonoBehaviour
                     state = PlayerAttackState.SlammingDown;
             }
         }
+    }
+
+    private bool isTriggerDown(SteamVR_TrackedObject.EIndex index)
+    {
+        var device = SteamVR_Controller.Input((int)index);
+        return device.GetPress(SteamVR_Controller.ButtonMask.Trigger);
     }
 
     private Vector3 getAttackDir()
