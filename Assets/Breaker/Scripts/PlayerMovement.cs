@@ -25,32 +25,26 @@ public class PlayerMovement : MonoBehaviour
 
     public void Update()
     {
-		// read inputs
-		if (playerCtrl.isViveController)
+        if (playerCtrl.isViveController)
         {
-			Vector2 touch = getTouchPadPosition();
-			Vector2 flatForward = new Vector2 (playerCtrl.LookDir.x, playerCtrl.LookDir.z);
-            playerCtrl.MoveDir = Vector3.Scale(flatForward, touch);
+            Transform camTransform = GetComponentInChildren<SteamVR_Camera>().head;
+            Vector3 lookDir = camTransform.forward;
+            Vector3 rightDir = camTransform.right;
+            Vector2 analogDir = getTouchPadPosition(SteamVR_TrackedObject.EIndex.Device4).normalized;
+            playerCtrl.MoveDir = ((lookDir * analogDir.y) + (rightDir * analogDir.x));
         }
         else
         {
 			playerCtrl.MoveDir = new Vector2(Input.GetAxis(hAxis), Input.GetAxis(vAxis));
 		}
 
-		// apply the movement tranform
-        transform.position += new Vector3(playerCtrl.MoveDir.x, 0, playerCtrl.MoveDir.y) * playerCtrl.Speed;
+        transform.position += playerCtrl.MoveDir * 0.02f;
     }
 
-    private Vector2 getTouchPadPosition()
+    private Vector2 getTouchPadPosition(SteamVR_TrackedObject.EIndex index)
     {
-        //Get the right device
-        var rightDevice = SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.FarthestRight);
-        //Check if the device is valid
-        if (rightDevice == -1) { return Vector2.zero; }
-        //Get the x,y position on the pad
-        Vector2 touch = SteamVR_Controller.Input(rightDevice).GetAxis(Valve.VR.EVRButtonId.k_EButton_Axis0);
-        //Check if the player press on the pad button
-        if (!SteamVR_Controller.Input(rightDevice).GetPress(SteamVR_Controller.ButtonMask.Touchpad)) { return Vector2.zero; }
-        return touch;
+        var device = SteamVR_Controller.Input((int)index);
+        bool isPressed = device.GetPress(SteamVR_Controller.ButtonMask.Touchpad);
+        return isPressed ? device.GetAxis(Valve.VR.EVRButtonId.k_EButton_Axis0) : Vector2.zero;
     }
 }

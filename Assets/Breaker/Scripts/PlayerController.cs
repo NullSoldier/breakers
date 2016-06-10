@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 {
     public float Speed = -0.5f;
 	public int PlayerIndex = 0;
-	public Vector2 MoveDir = Vector2.down;
+	public Vector3 MoveDir = Vector3.down;
 	public Vector3 LookDir = Vector3.forward;
 	public bool isViveController = false;
 
@@ -44,13 +44,11 @@ public class PlayerController : MonoBehaviour
             gameObject.SetActive(false);
         }
 
-        if(this.MoveDir != Vector2.zero) {
-            // read look direction
-            if (this.isViveController) {
-			    this.LookDir = GetComponent<SteamVR_Camera> ().head.forward;
-		    } else {
-			    this.LookDir = new Vector3 (MoveDir.x, 0.0f, MoveDir.y);
-		    }
-        }
+        // read look direction
+        if (isViveController) {
+			LookDir = GetComponentInChildren<SteamVR_Camera> ().head.forward;
+		} else if (MoveDir != Vector3.zero) {
+			LookDir = new Vector3 (MoveDir.x, 0.0f, MoveDir.y);
+		}
     }
 }
