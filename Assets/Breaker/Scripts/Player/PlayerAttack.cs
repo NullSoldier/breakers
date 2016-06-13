@@ -86,8 +86,6 @@ public class PlayerAttack : MonoBehaviour
 
     private List<IceCube> getCubesAttacked()
     {
-        var foo = Physics.RaycastAll(lastCube.transform.position, getAttackDir());
-
         return Physics
             .RaycastAll(lastCube.transform.position, getAttackDir())
             .Select((h) => h.transform.GetComponent<IceCube>())

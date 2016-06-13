@@ -21,10 +21,10 @@ public class IceCube : MonoBehaviour
     CubeState lastState;
     float lastStateChangeTime;
 
-    Rigidbody rb;
-    Renderer ren;
-    ParticleSystem ptz;
-    AudioSource audio;
+    private Rigidbody rb;
+    private Renderer ren;
+    private ParticleSystem ptz;
+	private new AudioSource audio;
 
     int stateIndex { get { return (int)state; } }
 
