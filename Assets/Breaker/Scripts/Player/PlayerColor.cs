@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ColorState : MonoBehaviour
+public class PlayerColor : MonoBehaviour
 {
     public void Awake()
     {

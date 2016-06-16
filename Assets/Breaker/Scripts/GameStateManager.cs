@@ -85,8 +85,10 @@ public class GameStateManager : MonoBehaviour
 		SpectateCamera.enabled = false;
 		OverheadCamera.enabled = true;
 
-		foreach(var p in players.OfPlayerState (PlayerState.Waiting, PlayerState.Dead))
-			p.GetComponent<PlayerController>().Spawn();
+		var toSpawn = players.OfPlayerState (PlayerState.Waiting, PlayerState.Dead).AsComponent<PlayerController> ();
+
+		foreach (var p in toSpawn)
+			p.Spawn ();
 	}
 
 	private void awake_RoundOver()
@@ -98,7 +100,7 @@ public class GameStateManager : MonoBehaviour
 	private void update_Waiting()
 	{
 		int readyCount = players.OfPlayerState (PlayerState.Waiting).Count ();
-//		Debug.Log (readyCount);
+
 		if (readyCount >= 2) {
 			Debug.Log ("Starting game with players " + readyCount);
 			state = GameState.Running;

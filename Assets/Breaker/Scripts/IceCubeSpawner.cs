@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spawner : MonoBehaviour
+public class IceCubeSpawner : MonoBehaviour
 {
     public GameObject IceCube;
     public float Distance = 0.5f;

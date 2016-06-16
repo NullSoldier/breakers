@@ -6,8 +6,6 @@ public enum PlayerState
 	Inactive,
 	Waiting,
     Alive,
-    SlammingUp,
-    SlammingDown,
     Dead
 }
 
@@ -15,17 +13,19 @@ public class PlayerController : MonoBehaviour
 {
 	public float Speed = -0.5f;
 	public bool IsViveController = false;
-	public uint PlayerIndex;
-	public PlayerState State;
+	public int PlayerIndex = -1;
+	public PlayerState State = PlayerState.Inactive;
 
 	[HideInInspector]
 	public Vector2 MoveDir = Vector2.down;
 	[HideInInspector]
 	public Vector3 LookDir = Vector3.forward;
 
+	private Rigidbody rigidBody = null;
+
     void Awake()
     {
-		State = PlayerState.Inactive;
+		rigidBody = GetComponent<Rigidbody> ();
 		State = PlayerState.Waiting;
     }
 
@@ -45,14 +45,15 @@ public class PlayerController : MonoBehaviour
 
 	public void Spawn()
 	{
-		State = PlayerState.Alive;
-
 		if(PlayerIndex == 0)
 			transform.position = new Vector3(4, 2, 4);
 		else if(PlayerIndex == 1)
 			transform.position = new Vector3(-4, 2, -4);
 		else if(PlayerIndex == 2)
 			transform.position = new Vector3(-4, 2, 4);
+
+		rigidBody.velocity = Vector3.zero;
+		State = PlayerState.Alive;
 	}
 
 
