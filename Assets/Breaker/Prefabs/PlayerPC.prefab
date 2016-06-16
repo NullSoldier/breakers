@@ -31,8 +31,9 @@ GameObject:
   - 114: {fileID: 11475348}
   - 114: {fileID: 11447718}
   - 114: {fileID: 11486826}
+  - 114: {fileID: 11478068}
   m_Layer: 0
-  m_Name: Player PC
+  m_Name: PlayerPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,6 +148,17 @@ MonoBehaviour:
   State: 0
   MoveDir: {x: 0, y: -1}
   LookDir: {x: 0, y: 0, z: 1}
+--- !u!114 &11478068
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b67670f472a554053979ec947e512570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11486826
 MonoBehaviour:
   m_ObjectHideFlags: 1
