@@ -25,6 +25,7 @@ public class PlayerMovementVive : MonoBehaviour
 		}
 
 		playerCtrl.LookDir = headCamera.transform.forward;
+		Debug.DrawRay(playerCtrl.transform.position, -new Vector3(playerCtrl.MoveDir.x, 0, playerCtrl.MoveDir.y), Color.red, 0.5f, false);
 	}
 
 	private Vector2 getTouchVec()

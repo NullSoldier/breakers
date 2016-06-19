@@ -24,5 +24,7 @@ public class PlayerMovementAxis : MonoBehaviour
 			playerCtrl.LookDir = move;
 			transform.position += new Vector3(move.x, 0, move.y) * playerCtrl.Speed;
 		}
+
+		Debug.DrawRay(playerCtrl.transform.position, -new Vector3(playerCtrl.MoveDir.x, 0, playerCtrl.MoveDir.y), Color.red, 0.5f, false);
     }
 }
