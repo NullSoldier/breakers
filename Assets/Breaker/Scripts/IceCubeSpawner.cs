@@ -15,6 +15,13 @@ public class IceCubeSpawner : MonoBehaviour
         }
     }
 
+	public void resetIceCubes() {
+		IceCube[] cubes = FindObjectsOfType(typeof(IceCube)) as IceCube[];
+		foreach (IceCube cube in cubes) {
+			cube.state = CubeState.Pristine;
+		}
+	}
+
     private Vector3 getBlockPosition(uint cellX, uint cellY)
     {
         Vector3 offset = new Vector3(0, -(Distance / 2), 0);

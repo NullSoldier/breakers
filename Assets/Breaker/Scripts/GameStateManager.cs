@@ -22,11 +22,13 @@ public class GameStateManager : MonoBehaviour
 	private GameState state;
 	private GameState lastState;
 	private float lastStateChangeTime;
+	private IceCubeSpawner iceSpawner;
 
 	void Awake()
 	{
 		players = new List<GameObject> ();
 		state = GameState.Waiting;
+		iceSpawner = (IceCubeSpawner) FindObjectOfType(typeof(IceCubeSpawner));
 
 		var player1 = Instantiate(PcPrefab);
 		var ctrl = player1.GetComponent<PlayerController> ();
@@ -125,6 +127,7 @@ public class GameStateManager : MonoBehaviour
 		foreach (var p in players.OfPlayerState (PlayerState.Dead, PlayerState.Alive).AsComponent<PlayerController> ()) {
 			p.StartWaiting ();
 		}
+		iceSpawner.resetIceCubes ();
 
 		state = GameState.Waiting;
 	}
