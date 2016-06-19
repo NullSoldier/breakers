@@ -127,6 +127,7 @@ public class GameStateManager : MonoBehaviour
 		foreach (var p in players.OfPlayerState (PlayerState.Dead, PlayerState.Alive).AsComponent<PlayerController> ()) {
 			p.StartWaiting ();
 		}
+
 		iceSpawner.resetIceCubes ();
 
 		state = GameState.Waiting;

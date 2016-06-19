@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
 	public int PlayerIndex = -1;
 	public PlayerState State = PlayerState.Inactive;
 
+	private PlayerAttack playerAttack;
+
 	[HideInInspector]
 	public Vector2 MoveDir = Vector2.down;
 	[HideInInspector]
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
 		rigidBody = GetComponent<Rigidbody> ();
+		playerAttack = GetComponent<PlayerAttack> ();
 		State = PlayerState.Waiting;
     }
 
@@ -41,6 +44,7 @@ public class PlayerController : MonoBehaviour
 	public void StartWaiting()
 	{
 		State = PlayerState.Waiting;
+		playerAttack.resetAttack();
 	}
 
 	public void Spawn()

@@ -70,6 +70,11 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+	public void resetAttack() {
+		state = PlayerAttackState.None;
+		lastStateTime = 0;
+	}
+
     private Vector3 getAttackDir()
     {
         return new Vector3(-playerCtrl.LookDir.x, 0.0f, -playerCtrl.LookDir.y);
