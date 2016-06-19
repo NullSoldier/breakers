@@ -15,16 +15,15 @@ public class PlayerMovementAxis : MonoBehaviour
 
     public void Update()
     {
-		Vector3 move = new Vector2(
+		Vector3 move = new Vector3(
 			Input.GetAxis(HorizontalAxis),
+            0.0f,
 			Input.GetAxis(VerticalAxis));
 
 		if (move != Vector3.zero) {
 			playerCtrl.MoveDir = move;
 			playerCtrl.LookDir = move;
-			transform.position += new Vector3(move.x, 0, move.y) * playerCtrl.Speed;
+			transform.position += move * playerCtrl.Speed;
 		}
-
-		Debug.DrawRay(playerCtrl.transform.position, -new Vector3(playerCtrl.MoveDir.x, 0, playerCtrl.MoveDir.y), Color.red, 0.5f, false);
     }
 }

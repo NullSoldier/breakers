@@ -9,7 +9,7 @@ public class PlayerMovementVive : MonoBehaviour
 	public void Awake()
 	{
 		playerCtrl = GetComponent<PlayerController>();
-		headCamera = GetComponent<SteamVR_Camera>();
+		headCamera = GetComponentInChildren<SteamVR_Camera>();
 
 		if (!playerCtrl.IsViveController)
 			throw new System.Exception ("Cannot use VivePlayerMovement on non vive player");
@@ -21,16 +21,19 @@ public class PlayerMovementVive : MonoBehaviour
 
 		if(touchVec != Vector2.zero) {
 			playerCtrl.MoveDir = headCamera.transform.forward * touchVec.y + headCamera.transform.right * touchVec.x;
-			transform.position += new Vector3(playerCtrl.MoveDir.x, 0, playerCtrl.MoveDir.y) * playerCtrl.Speed;
-		}
+            //new Vector3(playerCtrl.MoveDir.x, 0, playerCtrl.MoveDir.y) * playerCtrl.Speed;
+            //transform.position += (headCamera.transform.forward * touchVec.y + headCamera.transform.right * touchVec.x).normalized * playerCtrl.Speed;
+            var move = (headCamera.transform.forward * touchVec.y + headCamera.transform.right * touchVec.x);
+            transform.position += move * playerCtrl.Speed;
+            playerCtrl.MoveDir = new Vector3(move.x, 0.0f, move.y);
+        }
 
 		playerCtrl.LookDir = headCamera.transform.forward;
-		Debug.DrawRay(playerCtrl.transform.position, -new Vector3(playerCtrl.MoveDir.x, 0, playerCtrl.MoveDir.y), Color.red, 0.5f, false);
 	}
 
 	private Vector2 getTouchVec()
 	{
-		int leftIndex = (int)SteamVR_TrackedObject.EIndex.Device1;
+		int leftIndex = (int)SteamVR_TrackedObject.EIndex.Device3;
 		int rightIndex = (int)SteamVR_TrackedObject.EIndex.Device4;
 
 		SteamVR_Controller.Device leftDevice = SteamVR_Controller.Input (leftIndex);
@@ -40,7 +43,7 @@ public class PlayerMovementVive : MonoBehaviour
 		Vector2 rightTouch = rightDevice.GetAxis(Valve.VR.EVRButtonId.k_EButton_Axis0);
 
 		bool leftTouchDown = leftDevice.GetPress (SteamVR_Controller.ButtonMask.Touchpad);
-		bool rightTouchDown = leftDevice.GetPress (SteamVR_Controller.ButtonMask.Touchpad);
+		bool rightTouchDown = rightDevice.GetPress (SteamVR_Controller.ButtonMask.Touchpad);
 
 		if (leftTouchDown && leftTouch != Vector2.zero)
 			return leftTouch;

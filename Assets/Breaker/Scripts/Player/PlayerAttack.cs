@@ -59,8 +59,15 @@ public class PlayerAttack : MonoBehaviour
         {
             if (state == PlayerAttackState.None)
             {
-                if(Input.GetKey(attackKey))
+                if(playerCtrl.IsViveController && isTriggerDown())
+                {
                     state = PlayerAttackState.SlammingUp;
+                    rumbleControllers();
+                }
+                else if(!playerCtrl.IsViveController && Input.GetKey(attackKey))
+                {
+                    state = PlayerAttackState.SlammingUp;
+                }
             }
             else if (state == PlayerAttackState.SlammingUp)
             {
@@ -75,9 +82,31 @@ public class PlayerAttack : MonoBehaviour
 		lastStateTime = 0;
 	}
 
+    private bool isTriggerDown()
+    {
+        int leftIndex = (int)SteamVR_TrackedObject.EIndex.Device3;
+        int rightIndex = (int)SteamVR_TrackedObject.EIndex.Device4;
+
+        var leftController = SteamVR_Controller.Input(leftIndex);
+        var rightController = SteamVR_Controller.Input(rightIndex);
+
+        return (
+            leftController.GetPress(SteamVR_Controller.ButtonMask.Trigger) ||
+            rightController.GetPress(SteamVR_Controller.ButtonMask.Trigger));
+    }
+
+    private void rumbleControllers()
+    {
+        var leftController = SteamVR_Controller.Input((int)SteamVR_TrackedObject.EIndex.Device3);
+        var rightController = SteamVR_Controller.Input((int)SteamVR_TrackedObject.EIndex.Device4);
+
+        leftController.TriggerHapticPulse();
+        rightController.TriggerHapticPulse();
+    }
+
     private Vector3 getAttackDir()
     {
-        return new Vector3(-playerCtrl.LookDir.x, 0.0f, -playerCtrl.LookDir.y);
+        return new Vector3(playerCtrl.LookDir.x, 0.0f, playerCtrl.LookDir.z);
     }
 
     private IceCube getCubeUnder()
@@ -116,8 +145,6 @@ public class PlayerAttack : MonoBehaviour
             staggerTime += BreakStaggerTime;
         }
 
-        lastCube.GetComponentInChildren<ParticleSystem>().Play();
-        lastCube.Crack(0);
         state = PlayerAttackState.None;
     }
 }

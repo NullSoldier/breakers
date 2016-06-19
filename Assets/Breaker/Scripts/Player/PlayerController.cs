@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 	private PlayerAttack playerAttack;
 
 	[HideInInspector]
-	public Vector2 MoveDir = Vector2.down;
+	public Vector3 MoveDir = Vector3.forward;
 	[HideInInspector]
 	public Vector3 LookDir = Vector3.forward;
 
@@ -34,9 +34,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-		if (State == PlayerState.Alive)
+        Debug.DrawRay(transform.position, LookDir, Color.green, 0.5f, false);
+        Debug.DrawRay(transform.position, MoveDir, Color.blue, 0.5f, false);
+
+        if (State == PlayerState.Alive)
 		{
-			if (transform.position.y < -5)
+            if (transform.position.y < -5)
 				State = PlayerState.Dead;
 		}
     }
@@ -54,9 +57,9 @@ public class PlayerController : MonoBehaviour
 		else if(PlayerIndex == 1)
 			transform.position = new Vector3(-4, 2, -4);
 		else if(PlayerIndex == 2)
-			transform.position = new Vector3(-4, 2, 4);
+			transform.position = new Vector3(0, 0, 0);
 
-		rigidBody.velocity = Vector3.zero;
+        rigidBody.velocity = Vector3.zero;
 		State = PlayerState.Alive;
 	}
 

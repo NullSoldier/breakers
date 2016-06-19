@@ -39,20 +39,20 @@ public class GameStateManager : MonoBehaviour
 		player1.transform.parent = transform.parent;
 		players.Add (player1);
 
-		var player2 = Instantiate(PcPrefab);
-		ctrl = player2.GetComponent<PlayerController> ();
-		ctrl.PlayerIndex = 1;
-		mv = player2.GetComponent<PlayerMovementAxis> ();
-		mv.HorizontalAxis = "Horizontal2";
-		mv.VerticalAxis = "Vertical2";
-		player2.transform.parent = transform.parent;
-		players.Add (player2);
+		//var player2 = Instantiate(PcPrefab);
+		//ctrl = player2.GetComponent<PlayerController> ();
+		//ctrl.PlayerIndex = 1;
+		//mv = player2.GetComponent<PlayerMovementAxis> ();
+		//mv.HorizontalAxis = "Horizontal2";
+		//mv.VerticalAxis = "Vertical2";
+		//player2.transform.parent = transform.parent;
+		//players.Add (player2);
 
-//		var player3 = Instantiate(VivePrefab);
-//		var ctrl = player3.GetComponent<PlayerController> ();
-//		ctrl.PlayerIndex = 2;
-//		player3.transform.parent = transform.parent;
-//		players.Add (player3);
+		var player3 = Instantiate(VivePrefab);
+		ctrl = player3.GetComponent<PlayerController> ();
+		ctrl.PlayerIndex = 2;
+		player3.transform.parent = transform.parent;
+		players.Add (player3);
 	}
 
     void Update()
